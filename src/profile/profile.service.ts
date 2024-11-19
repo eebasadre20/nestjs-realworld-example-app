@@ -101,4 +101,16 @@ export class ProfileService {
     return {profile};
   }
 
+  async findAllFollowers(username: string): Promise<UserEntity[]> {
+    const user = await this.userRepository.findOne({ where: { username } });
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    const follows = await this.followsRepository.find({ where: { followingId: user.id } });
+    const followerIds = follows.map(follow => follow.followerId);
+    const followers = await this.userRepository.findByIds(followerIds);
+
+    return followers;
+  }
 }

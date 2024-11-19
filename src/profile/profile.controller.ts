@@ -5,7 +5,9 @@ import { ProfileRO } from './profile.interface';
 import { User } from '../user/user.decorator';
 
 import {
-  ApiBearerAuth, ApiTags,
+  ApiBearerAuth,
+  ApiResponse,
+  ApiOperation, ApiTags,
 } from '@nestjs/swagger';
 
 @ApiBearerAuth()
@@ -25,9 +27,17 @@ export class ProfileController {
     return await this.profileService.follow(email, username);
   }
 
-  @Delete(':username/follow')
+  @Delete(':username/unfollow')
   async unFollow(@User('id') userId: number,  @Param('username') username: string): Promise<ProfileRO> {
     return await this.profileService.unFollow(userId, username);
+  }
+
+  @ApiOperation({ summary: 'Get all followers of a user' })
+  @ApiResponse({ status: 200, description: 'Return all followers.'})
+  @ApiResponse({ status: 404, description: 'User not found.' })
+  @Get(':username/followers')
+  async getFollowers(@Param('username') username: string): Promise<User[]> {
+    return await this.profileService.findAllFollowers(username);
   }
 
 }

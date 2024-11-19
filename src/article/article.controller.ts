@@ -103,4 +103,11 @@ export class ArticleController {
     return await this.articleService.unFavorite(userId, slug);
   }
 
+  @ApiOperation({ summary: 'Get all articles' })
+  @ApiResponse({ status: 200, description: 'Return all articles.'})
+  @Get()
+  async searchByTitleOrDesc(@Query() query, @Query('search') search?: string): Promise<ArticlesRO> {
+    return await this.articleService.findAll(query, search);
+  }
+
 }

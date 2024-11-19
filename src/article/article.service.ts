@@ -194,8 +194,8 @@ export class ArticleService {
     return {article};
   }
 
-  async delete(slug: string): Promise<DeleteResult> {
-    return await this.articleRepository.delete({ slug: slug});
+  async delete(id: number): Promise<DeleteResult> {
+    return await this.articleRepository.delete({ id: id});
   }
 
   slugify(title: string) {

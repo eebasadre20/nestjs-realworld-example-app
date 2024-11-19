@@ -110,4 +110,10 @@ export class ArticleController {
     return await this.articleService.findAll(query, search);
   }
 
+  @ApiOperation({ summary: 'Get all articles based on search content' })
+  @ApiResponse({ status: 200, description: 'Return all articles.'})
+  @Get()
+  async searchByContent(@Query() query, @Query('search') search?: string): Promise<ArticlesRO> {
+    return await this.articleService.findAll(query, search);
+  }
 }

@@ -56,10 +56,10 @@ export class ArticleController {
   @ApiOperation({ summary: 'Update article' })
   @ApiResponse({ status: 201, description: 'The article has been successfully updated.'})
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @Put(':slug')
+  @Put(':id')
   async update(@Param() params, @Body('article') articleData: CreateArticleDto) {
     // Todo: update slug also when title gets changed
-    return this.articleService.update(params.slug, articleData);
+    return this.articleService.update(params.id, articleData);
   }
 
   @ApiOperation({ summary: 'Delete article' })

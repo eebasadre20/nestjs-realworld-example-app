@@ -187,8 +187,8 @@ export class ArticleService {
 
   }
 
-  async update(slug: string, articleData: any): Promise<ArticleRO> {
-    let toUpdate = await this.articleRepository.findOne({ slug: slug});
+  async update(id: number, articleData: any): Promise<ArticleRO> {
+    let toUpdate = await this.articleRepository.findOne({ id: id});
     let updated = Object.assign(toUpdate, articleData);
     const article = await this.articleRepository.save(updated);
     return {article};

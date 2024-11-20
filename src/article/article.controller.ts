@@ -73,9 +73,9 @@ export class ArticleController {
   @ApiOperation({ summary: 'Create comment' })
   @ApiResponse({ status: 201, description: 'The comment has been successfully created.'})
   @ApiResponse({ status: 403, description: 'Forbidden.' })
-  @Post(':slug/comments')
-  async createComment(@Param('slug') slug, @Body('comment') commentData: CreateCommentDto) {
-    return await this.articleService.addComment(slug, commentData);
+  @Post(':id/comments')
+  async createComment(@Param('id') id, @Body('comment') commentData: CreateCommentDto) {
+    return await this.articleService.addComment(id, commentData);
   }
 
   @ApiOperation({ summary: 'Delete comment' })

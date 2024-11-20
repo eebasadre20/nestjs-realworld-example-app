@@ -98,8 +98,8 @@ export class ArticleService {
     return {article};
   }
 
-  async addComment(slug: string, commentData): Promise<ArticleRO> {
-    let article = await this.articleRepository.findOne({slug});
+  async addComment(id: number, commentData): Promise<ArticleRO> {
+    let article = await this.articleRepository.findOne({id});
 
     const comment = new Comment();
     comment.body = commentData.body;

@@ -10,6 +10,9 @@ export class Comment {
   @Column()
   body: string;
 
+  @Column()
+  description: string
+
   @ManyToOne(type => ArticleEntity, article => article.comments)
   article: ArticleEntity;
 }

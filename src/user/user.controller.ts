@@ -23,6 +23,12 @@ export class UserController {
     return await this.userService.findByEmail(email);
   }
 
+  @Get('user/:id')
+  async findById(@User('id') id: number): Promise<UserRO> {
+    return await this.userService.findById(id);
+  }
+
+
   @Put('user')
   async update(@User('id') userId: number, @Body('user') userData: UpdateUserDto) {
     return await this.userService.update(userId, userData);

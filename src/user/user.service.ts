@@ -81,6 +81,8 @@ export class UserService {
   }
 
   async delete(id: number): Promise<DeleteResult> {
+    const users = await this.userRepository.find();
+    console.log(users)
     return await this.userRepository.delete({ id: id});
   }
 

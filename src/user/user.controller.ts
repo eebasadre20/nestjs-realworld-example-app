@@ -36,6 +36,8 @@ export class UserController {
 
   @Delete('users/:id')
   async delete(@Param() params) {
+    const users = await this.userService.findAll();
+    console.log(users)
     return await this.userService.delete(params.id);
   }
 

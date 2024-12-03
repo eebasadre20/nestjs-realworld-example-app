@@ -80,8 +80,8 @@ export class UserService {
     return await this.userRepository.save(updated);
   }
 
-  async delete(email: string): Promise<DeleteResult> {
-    return await this.userRepository.delete({ email: email});
+  async delete(id: number): Promise<DeleteResult> {
+    return await this.userRepository.delete({ id: id});
   }
 
   async findById(id: number): Promise<UserRO>{

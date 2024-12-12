@@ -101,6 +101,11 @@ export class ArticleController {
       throw new Error('User not found')
     }
 
+    const article = await this.articleService.findOne({slug})
+    if(!article) {
+      throw new Error('Article not found')
+    }
+
     return await this.articleService.favorite(userId, slug);
   }
 

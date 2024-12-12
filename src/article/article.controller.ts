@@ -96,12 +96,12 @@ export class ArticleController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Post(':slug/favorite')
   async favorite(@User('id') userId: number, @Param('slug') slug) {
-    const user = await this.userService.findById(userId)
-    if(!user) {
-      throw new Error('User not found')
+    const article = await this.articleService.findOne({slug})
+    if(article) {
+      return await this.articleService.favorite(userId, slug);
+    } else {
+      throw new Error('Article not found!')
     }
-
-    return await this.articleService.favorite(userId, slug);
   }
 
   @ApiOperation({ summary: 'Unfavorite article' })

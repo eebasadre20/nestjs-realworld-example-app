@@ -100,7 +100,7 @@ export class ArticleController {
     if(article) {
       return await this.articleService.favorite(userId, slug);
     } else {
-      throw new Error('Article not found!')
+      throw new Error('Article not found! Yes Sir!')
     }
   }
 

@@ -1,4 +1,3 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, JoinTable, ManyToMany, OneToMany} from 'typeorm';
 import { IsEmail } from 'class-validator';
 import * as argon2 from 'argon2';
 import { ArticleEntity } from '../article/article.entity';
@@ -11,6 +10,9 @@ export class UserEntity {
 
   @Column()
   username: string;
+
+  @Column()
+  is_logged_in: boolean; // Added new column to track login status
 
   @Column()
   @IsEmail()

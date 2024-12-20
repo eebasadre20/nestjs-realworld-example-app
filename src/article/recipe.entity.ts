@@ -1,5 +1,5 @@
 import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm'
-import { User } from './user.entity'
+import { UserEntity } from './user.entity'
 
 @Entity()
 export class Recipe {
@@ -9,6 +9,9 @@ export class Recipe {
   @Column('text')
   description: string
 
-  @ManyToOne(() => User, user => user.recipes)
-  user: User
+  @ManyToOne(() => UserEntity, user => user.recipes, { onDelete: 'CASCADE', onUpdate: 'CASCADE' })
+  user: UserEntity
+
+  @Column({ type: 'int', name: 'user_id' })
+  userId: number
 }

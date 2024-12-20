@@ -1,6 +1,7 @@
 import { IsEmail } from 'class-validator';
 import * as argon2 from 'argon2';
-import { ArticleEntity } from '../article/article.entity';
+import { RecipeEntity } from '../article/recipe.entity';
+import { PasswordResetRequestEntity } from '../password-reset/password-reset-request.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -18,11 +19,11 @@ export class UserEntity {
   @IsEmail()
   email: string;
 
-  @Column({default: ''})
-  bio: string;
+  @OneToMany(type => RecipeEntity, recipe => recipe.user)
+  recipes: RecipeEntity[];
 
-  @Column({default: ''})
-  image: string;
+  @OneToMany(type => PasswordResetRequestEntity, passwordResetRequest => passwordResetRequest.user)
+  passwordResetRequests: PasswordResetRequestEntity[];
 
   @Column()
   password: string;

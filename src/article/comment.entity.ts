@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, JoinColumn } from 'typeorm';
 import { ArticleEntity } from './article.entity';
+import { Category } from './category.entity';
 
 @Entity()
 export class Comment {
@@ -15,4 +16,8 @@ export class Comment {
 
   @ManyToOne(type => ArticleEntity, article => article.comments)
   article: ArticleEntity;
+
+  @ManyToOne(type => Category)
+  @JoinColumn({ name: 'category_id' })
+  category: Category;
 }

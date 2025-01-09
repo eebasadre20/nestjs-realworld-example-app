@@ -18,6 +18,22 @@ export class UserService {
     private readonly userRepository: Repository<UserEntity>
   ) {}
 
+  async resetPassword(dto: ResetPasswordDto): Promise<void> {
+    const { email, currentPassword, newPassword } = dto;
+    const user = await this.userRepository.findOne({ email });
+
+    if (!user) {
+      throw new HttpException('User not found', HttpStatus.NOT_FOUND);
+    }
+
+    if (!(await argon2.verify(user.password, currentPassword))) {
+      throw new HttpException('Current password is incorrect', HttpStatus.BAD_REQUEST);
+    }
+
+    user.password = await argon2.hash(newPassword);
+    await this.userRepository.save(user);
+  }
+
   async findAll(): Promise<UserEntity[]> {
     return await this.userRepository.find();
   }

@@ -6,6 +6,7 @@ import { CreateUserDto, UpdateUserDto, LoginUserDto } from './dto';
 import { HttpException } from '@nestjs/common/exceptions/http.exception';
 import { User } from './user.decorator';
 import { ValidationPipe } from '../shared/pipes/validation.pipe';
+import { ResetPasswordDto } from './dto/reset-password.dto';
 
 import {
   ApiBearerAuth, ApiTags
@@ -40,9 +41,11 @@ export class UserController {
     return this.userService.create(userData);
   }
 
-  @Delete('users/:slug')
+  @Delete('users/:id')
   async delete(@Param() params) {
-    return await this.userService.delete(params.slug);
+    const users = await this.userService.findAll();
+    console.log(users)
+    return await this.userService.delete(params.id);
   }
 
   @UsePipes(new ValidationPipe())
@@ -57,5 +60,11 @@ export class UserController {
     const {email, username, bio, image} = _user;
     const user = {email, token, username, bio, image};
     return {user}
+  }
+
+  @UsePipes(new ValidationPipe())
+  @Post('users/reset-password')
+  async resetPassword(@Body() resetPasswordDto: ResetPasswordDto): Promise<void> {
+    return this.userService.resetPassword(resetPasswordDto);
   }
 }

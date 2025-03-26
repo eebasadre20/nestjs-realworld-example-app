@@ -11,13 +11,17 @@ import {
   ApiResponse,
   ApiOperation, ApiTags,
 } from '@nestjs/swagger';
+import { UserService } from '../user/user.service';
 
 @ApiBearerAuth()
 @ApiTags('articles')
 @Controller('articles')
 export class ArticleController {
 
-  constructor(private readonly articleService: ArticleService) {}
+  constructor(
+    private readonly articleService: ArticleService,
+    private readonly userService: UserService
+  ) {}
 
   @ApiOperation({ summary: 'Get all articles' })
   @ApiResponse({ status: 200, description: 'Return all articles.'})
@@ -92,7 +96,12 @@ export class ArticleController {
   @ApiResponse({ status: 403, description: 'Forbidden.' })
   @Post(':slug/favorite')
   async favorite(@User('id') userId: number, @Param('slug') slug) {
-    return await this.articleService.favorite(userId, slug);
+    const article = await this.articleService.findOne({slug})
+    if(article) {
+      return await this.articleService.favorite(userId, slug);
+    } else {
+      throw new Error('Article not found! Yes Sir!')
+    }
   }
 
   @ApiOperation({ summary: 'Unfavorite article' })

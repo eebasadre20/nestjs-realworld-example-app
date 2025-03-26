@@ -1,7 +1,7 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, JoinTable, ManyToMany, OneToMany} from 'typeorm';
 import { IsEmail } from 'class-validator';
 import * as argon2 from 'argon2';
-import { ArticleEntity } from '../article/article.entity';
+import { RecipeEntity } from '../article/recipe.entity';
+import { PasswordResetRequestEntity } from '../password-reset/password-reset-request.entity';
 
 @Entity('user')
 export class UserEntity {
@@ -13,14 +13,17 @@ export class UserEntity {
   username: string;
 
   @Column()
+  is_logged_in: boolean; // Added new column to track login status
+
+  @Column()
   @IsEmail()
   email: string;
 
-  @Column({default: ''})
-  bio: string;
+  @OneToMany(type => RecipeEntity, recipe => recipe.user)
+  recipes: RecipeEntity[];
 
-  @Column({default: ''})
-  image: string;
+  @OneToMany(type => PasswordResetRequestEntity, passwordResetRequest => passwordResetRequest.user)
+  passwordResetRequests: PasswordResetRequestEntity[];
 
   @Column()
   password: string;

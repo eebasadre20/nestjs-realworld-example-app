@@ -1,4 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from "typeorm";
+import { Sample } from './sample.entity';
 
 @Entity('follows')
 export class FollowsEntity {
@@ -11,5 +12,9 @@ export class FollowsEntity {
 
   @Column()
   followingId: number;
+
+  @ManyToOne(() => Sample, sample => sample.id)
+  @Column()
+  sampleId: number;
 
 }
